@@ -11,6 +11,7 @@ import {
   IconClose,
   IconChevron,
 } from "@/components/ui/Icons";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 import { collections } from "@/data/collections";
 import {
   categoryLabels,
@@ -145,6 +146,9 @@ export function Header() {
             >
               <IconBag size={18} />
             </Link>
+            <div className="hidden sm:block ml-1">
+              <SignOutButton />
+            </div>
           </div>
         </div>
 
@@ -327,7 +331,7 @@ export function Header() {
                 </Link>
               ))}
             </nav>
-            <div className="mt-auto pt-8">
+            <div className="mt-auto pt-8 space-y-3">
               <Link
                 href="/shop"
                 onClick={() => setMobileOpen(false)}
@@ -335,6 +339,9 @@ export function Header() {
               >
                 Enter the Shop
               </Link>
+              <div className="flex justify-center">
+                <SignOutButton />
+              </div>
             </div>
           </div>
         </div>
