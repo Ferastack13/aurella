@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingRoot: process.cwd(),
   images: {
     remotePatterns: [
       {
@@ -7,12 +8,6 @@ const nextConfig = {
         hostname: "images.unsplash.com",
       },
     ],
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: false,
   },
 };
 
