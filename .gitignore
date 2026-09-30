@@ -49,3 +49,6 @@ yarn-install.log
 next-env.d.ts
 
 install*.log
+
+build-error.log
+vercel-inspect.log
