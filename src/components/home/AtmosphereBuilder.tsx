@@ -21,7 +21,8 @@ const roomStories: Record<string, string> = {
 };
 
 export function AtmosphereBuilder() {
-  const [active, setActive] = useState(rooms[0].id);
+  type RoomId = (typeof rooms)[number]["id"];
+  const [active, setActive] = useState<RoomId>(rooms[0].id);
   const current = rooms.find((r) => r.id === active) ?? rooms[0];
 
   return (
