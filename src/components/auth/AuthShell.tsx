@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 export function AuthShell({
@@ -22,8 +23,17 @@ export function AuthShell({
         <div className="mb-10 text-center">
           <Link
             href="/login"
-            className="font-display text-2xl tracking-[0.28em] text-charcoal"
+            className="inline-flex items-center gap-3 font-display text-2xl tracking-[0.28em] text-charcoal"
+            aria-label="AURELIA"
           >
+            <Image
+              src="/brand/aurelia-mark.jpg"
+              alt=""
+              width={40}
+              height={40}
+              className="h-10 w-10 rounded-full object-cover ring-1 ring-charcoal/10"
+              priority
+            />
             AURELIA
           </Link>
           <h1 className="font-display mt-8 text-3xl text-charcoal md:text-4xl">

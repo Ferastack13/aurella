@@ -107,9 +107,20 @@ export function Header() {
 
           <Link
             href="/"
-            className="font-display absolute left-1/2 -translate-x-1/2 text-[18px] md:text-[22px] tracking-[0.28em] text-charcoal"
+            className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5"
+            aria-label="AURELIA home"
           >
-            AURELIA
+            <Image
+              src="/brand/aurelia-mark.jpg"
+              alt=""
+              width={36}
+              height={36}
+              className="h-8 w-8 rounded-full object-cover shadow-sm ring-1 ring-charcoal/10 md:h-9 md:w-9"
+              priority
+            />
+            <span className="font-display text-[18px] md:text-[22px] tracking-[0.28em] text-charcoal">
+              AURELIA
+            </span>
           </Link>
 
           <div className="ml-auto flex items-center gap-1 md:gap-2">
@@ -307,7 +318,14 @@ export function Header() {
           />
           <div className="absolute inset-y-0 left-0 w-[86%] max-w-sm glass-strong rounded-r-[2rem] p-6 flex flex-col">
             <div className="flex items-center justify-between mb-10">
-              <span className="font-display tracking-[0.22em] text-lg">
+              <span className="flex items-center gap-2.5 font-display tracking-[0.22em] text-lg">
+                <Image
+                  src="/brand/aurelia-mark.jpg"
+                  alt=""
+                  width={32}
+                  height={32}
+                  className="h-8 w-8 rounded-full object-cover ring-1 ring-charcoal/10"
+                />
                 AURELIA
               </span>
               <button
