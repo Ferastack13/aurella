@@ -26,6 +26,7 @@ const navLinks = [
   { href: "/shop", label: "Shop", mega: true },
   { href: "/collections", label: "Collections" },
   { href: "/experiences", label: "Experiences" },
+  { href: "/profiles", label: "Profiles" },
   { href: "/journal", label: "Journal" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },

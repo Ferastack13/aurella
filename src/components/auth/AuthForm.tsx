@@ -42,6 +42,11 @@ export function AuthForm({ mode }: { mode: Mode }) {
         const { data, error: signUpError } = await supabase.auth.signUp({
           email: email.trim(),
           password,
+          options: {
+            data: {
+              full_name: email.trim().split("@")[0],
+            },
+          },
         });
 
         if (signUpError) {
