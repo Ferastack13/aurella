@@ -73,42 +73,44 @@ export function Header() {
         onMouseLeave={() => setMegaOpen(false)}
       >
         <div
-          className={`mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-4 py-3 transition-all duration-500 md:px-6 md:py-3.5 ${
+          className={`mx-auto grid max-w-[1280px] grid-cols-[1fr_auto_1fr] items-center gap-2 px-4 py-3 transition-all duration-500 md:px-6 md:py-3.5 ${
             scrolled || megaOpen || mobileOpen
               ? "glass-nav"
               : "rounded-full border border-white/30 bg-white/25 backdrop-blur-xl"
           }`}
         >
-          <button
-            type="button"
-            className="lg:hidden rounded-full p-2 text-charcoal/80 hover:bg-white/50"
-            aria-label="Open menu"
-            onClick={() => setMobileOpen(true)}
-          >
-            <IconMenu />
-          </button>
+          <div className="flex items-center justify-self-start">
+            <button
+              type="button"
+              className="lg:hidden rounded-full p-2 text-charcoal/80 hover:bg-white/50"
+              aria-label="Open menu"
+              onClick={() => setMobileOpen(true)}
+            >
+              <IconMenu />
+            </button>
 
-          <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.slice(0, 4).map((link) => (
-              <div
-                key={link.href}
-                className="relative"
-                onMouseEnter={() => setMegaOpen(!!link.mega)}
-              >
-                <Link
-                  href={link.href}
-                  className="flex items-center gap-1 rounded-full px-3.5 py-2 text-[12px] tracking-[0.08em] uppercase text-charcoal/75 transition-colors hover:bg-white/50 hover:text-charcoal"
+            <nav className="hidden lg:flex items-center gap-0.5">
+              {navLinks.slice(0, 4).map((link) => (
+                <div
+                  key={link.href}
+                  className="relative"
+                  onMouseEnter={() => setMegaOpen(!!link.mega)}
                 >
-                  {link.label}
-                  {link.mega && <IconChevron />}
-                </Link>
-              </div>
-            ))}
-          </nav>
+                  <Link
+                    href={link.href}
+                    className="flex items-center gap-1 rounded-full px-2.5 py-2 text-[11px] tracking-[0.08em] uppercase text-charcoal/75 transition-colors hover:bg-white/50 hover:text-charcoal xl:px-3.5 xl:text-[12px]"
+                  >
+                    {link.label}
+                    {link.mega && <IconChevron />}
+                  </Link>
+                </div>
+              ))}
+            </nav>
+          </div>
 
           <Link
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5"
+            className="flex items-center gap-2.5 justify-self-center"
             aria-label="AURELIA home"
           >
             <Image
@@ -124,13 +126,16 @@ export function Header() {
             </span>
           </Link>
 
-          <div className="ml-auto flex items-center gap-1 md:gap-2">
-            <nav className="hidden lg:flex items-center gap-1 mr-2">
-              {navLinks.slice(4).map((link) => (
+          <div className="flex items-center justify-end gap-1 justify-self-end md:gap-2">
+            <nav className="hidden lg:flex items-center gap-0.5 mr-1">
+              {navLinks
+                .slice(4)
+                .filter((link) => link.href !== "/profiles")
+                .map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-full px-3.5 py-2 text-[12px] tracking-[0.08em] uppercase text-charcoal/75 transition-colors hover:bg-white/50 hover:text-charcoal"
+                  className="rounded-full px-2.5 py-2 text-[11px] tracking-[0.08em] uppercase text-charcoal/75 transition-colors hover:bg-white/50 hover:text-charcoal xl:px-3.5 xl:text-[12px]"
                 >
                   {link.label}
                 </Link>
@@ -158,7 +163,13 @@ export function Header() {
             >
               <IconBag size={18} />
             </Link>
-            <div className="hidden sm:block ml-1">
+            <Link
+              href="/profiles"
+              className="hidden sm:inline-flex rounded-full px-3 py-2 text-[11px] tracking-[0.08em] uppercase text-charcoal/80 transition-colors hover:bg-white/50 hover:text-charcoal"
+            >
+              Profiles
+            </Link>
+            <div className="hidden sm:block">
               <SignOutButton />
             </div>
           </div>
