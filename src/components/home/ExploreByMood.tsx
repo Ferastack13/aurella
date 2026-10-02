@@ -52,7 +52,8 @@ const moods = [
 ];
 
 export function ExploreByMood() {
-  const [active, setActive] = useState(moods[0].id);
+  type MoodId = (typeof moods)[number]["id"];
+  const [active, setActive] = useState<MoodId>(moods[0].id);
   const current = moods.find((m) => m.id === active) ?? moods[0];
 
   return (

@@ -52,7 +52,8 @@ const families = [
 ];
 
 export function ScentDiscovery() {
-  const [active, setActive] = useState(families[0].id);
+  type FamilyId = (typeof families)[number]["id"];
+  const [active, setActive] = useState<FamilyId>(families[0].id);
   const current = families.find((f) => f.id === active) ?? families[0];
 
   return (
