@@ -5,14 +5,14 @@ import { AuthShell } from "@/components/auth/AuthShell";
 
 export const metadata: Metadata = {
   title: "Sign up",
-  description: "Create your AURELIA account with email.",
+  description: "Create your AURELIA account with email or Google.",
 };
 
 export default function SignupPage() {
   return (
     <AuthShell
       title="Create your account"
-      subtitle="Choose your role, then join AURELIA with your email."
+      subtitle="Choose your role, then join with Google or email."
     >
       <Suspense fallback={<p className="text-sm text-charcoal/50">Loading…</p>}>
         <AuthForm mode="signup" />
