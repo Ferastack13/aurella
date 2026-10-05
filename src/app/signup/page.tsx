@@ -12,7 +12,7 @@ export default function SignupPage() {
   return (
     <AuthShell
       title="Create your account"
-      subtitle="Join AURELIA with your email to access the full experience."
+      subtitle="Choose your role, then join AURELIA with your email."
     >
       <Suspense fallback={<p className="text-sm text-charcoal/50">Loading…</p>}>
         <AuthForm mode="signup" />

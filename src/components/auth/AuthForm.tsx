@@ -5,8 +5,24 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
+import { roleLabels, type AppRole } from "@/lib/profiles";
 
 type Mode = "login" | "signup";
+
+const signupRoles: { value: AppRole; description: string }[] = [
+  {
+    value: "member",
+    description: "Browse the shop and manage your own profile image.",
+  },
+  {
+    value: "admin",
+    description: "Member access, plus view other member profile images.",
+  },
+  {
+    value: "super_admin",
+    description: "Full access, including every profile image.",
+  },
+];
 
 export function AuthForm({ mode }: { mode: Mode }) {
   const router = useRouter();
@@ -16,6 +32,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [role, setRole] = useState<AppRole>("member");
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -45,6 +62,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
           options: {
             data: {
               full_name: email.trim().split("@")[0],
+              role,
             },
           },
         });
@@ -54,14 +72,25 @@ export function AuthForm({ mode }: { mode: Mode }) {
           return;
         }
 
-        if (data.session) {
+        if (data.session && data.user) {
+          const { error: roleError } = await supabase.rpc("apply_signup_role", {
+            selected_role: role,
+          });
+          if (roleError) {
+            setError(
+              `Account created, but role could not be saved: ${roleError.message}`
+            );
+            router.replace(next);
+            router.refresh();
+            return;
+          }
           router.replace(next);
           router.refresh();
           return;
         }
 
         setMessage(
-          "Account created. Check your email to confirm, then sign in."
+          `Account created as ${roleLabels[role]}. Check your email to confirm, then sign in.`
         );
         return;
       }
@@ -127,25 +156,65 @@ export function AuthForm({ mode }: { mode: Mode }) {
       </div>
 
       {mode === "signup" && (
-        <div>
-          <label
-            htmlFor="confirm"
-            className="mb-2 block text-[11px] tracking-[0.16em] uppercase text-charcoal/50"
-          >
-            Confirm password
-          </label>
-          <input
-            id="confirm"
-            type="password"
-            autoComplete="new-password"
-            required
-            minLength={6}
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            className="w-full rounded-2xl border border-charcoal/10 bg-white/70 px-4 py-3.5 text-sm outline-none transition focus:border-accent focus:bg-white"
-            placeholder="••••••••"
-          />
-        </div>
+        <>
+          <div>
+            <label
+              htmlFor="confirm"
+              className="mb-2 block text-[11px] tracking-[0.16em] uppercase text-charcoal/50"
+            >
+              Confirm password
+            </label>
+            <input
+              id="confirm"
+              type="password"
+              autoComplete="new-password"
+              required
+              minLength={6}
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              className="w-full rounded-2xl border border-charcoal/10 bg-white/70 px-4 py-3.5 text-sm outline-none transition focus:border-accent focus:bg-white"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <fieldset>
+            <legend className="mb-3 block text-[11px] tracking-[0.16em] uppercase text-charcoal/50">
+              Choose your role
+            </legend>
+            <div className="space-y-2.5">
+              {signupRoles.map((option) => {
+                const selected = role === option.value;
+                return (
+                  <label
+                    key={option.value}
+                    className={`flex cursor-pointer items-start gap-3 rounded-2xl border px-4 py-3.5 transition ${
+                      selected
+                        ? "border-charcoal/25 bg-white shadow-[0_8px_24px_rgba(34,34,34,0.06)]"
+                        : "border-charcoal/10 bg-white/50 hover:bg-white/80"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="role"
+                      value={option.value}
+                      checked={selected}
+                      onChange={() => setRole(option.value)}
+                      className="mt-1 accent-charcoal"
+                    />
+                    <span>
+                      <span className="block text-sm font-medium text-charcoal">
+                        {roleLabels[option.value]}
+                      </span>
+                      <span className="mt-1 block text-xs leading-relaxed text-charcoal/55">
+                        {option.description}
+                      </span>
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+          </fieldset>
+        </>
       )}
 
       {error && (
