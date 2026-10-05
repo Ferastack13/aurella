@@ -23,8 +23,13 @@ export const metadata: Metadata = {
   description:
     "Transform everyday spaces into immersive sensory experiences. Premium home fragrance and lifestyle from AURELIA.",
   icons: {
-    icon: [{ url: "/brand/aurelia-mark.jpg", type: "image/jpeg" }],
-    apple: [{ url: "/brand/aurelia-mark.jpg", type: "image/jpeg" }],
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16.png", type: "image/png", sizes: "16x16" },
+    ],
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+    shortcut: "/favicon.ico",
   },
 };
 
